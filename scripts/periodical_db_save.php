@@ -49,7 +49,7 @@ if (defined('PATH_TO_MYSQLDUMP')) {
         $mysqlDumpPath = "/usr/bin/mysqldump";
 }
 
-$mysqlDumpParam = " -h " . DB_HOST . " --user=" . DB_USER . " --password=" . DB_PASSWORD;
+$mysqlDumpParam = " -h " . DB_HOST . " --user=\"" . DB_USER . "\" --password=\"" . DB_PASSWORD."\"";
 $mysqlDumpParam .= " --no-create-db --add-drop-table " . DB_NAME;
 
 $backups_in_row = 0;
