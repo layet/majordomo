@@ -69,13 +69,15 @@ if (defined('SETTINGS_SYSTEM_DEBMES_PATH') && SETTINGS_SYSTEM_DEBMES_PATH != '')
 }
 
 DebMes("Checking log files.", 'maintenance');
-$dir = $path . "/";
-foreach (glob($dir . "*") as $file) {
-    if (filemtime($file) < time() - LOG_FILES_EXPIRE * 24 * 60 * 60) {
-        DebMes("Removing log file " . $file, 'maintenance');
-        @unlink($file);
+getDirTree($path, $files);
+foreach ($files as $file) {
+    if (filemtime($file['FILENAME']) < time() - LOG_FILES_EXPIRE * 24 * 60 * 60) {
+        DebMes("Removing log file " . $file['FILENAME'], 'maintenance');
+        unlink($file['FILENAME']);
     }
 }
+removeEmptySubFolders($path);
+
 
 if ($full_backup) {
     DebMes("Backing up files...", 'maintenance');
