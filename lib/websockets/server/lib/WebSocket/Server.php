@@ -131,7 +131,9 @@ class Server extends Socket
                                         $client = $this->clients[(int) $socket] ?? null;
                                         if (! $client) {
                                                 unset($this->clients[(int) $socket]);
-                                                $this->allsockets = array_filter($this->allsockets, fn($s) => $s !== $socket);
+                                                $this->allsockets = array_filter($this->allsockets, function ($s) use ($socket) {
+                                                    return $s !== $socket;
+                                                });
                                                 continue;
                                         }
 
@@ -155,7 +157,9 @@ class Server extends Socket
                                         if ($client->waitingForData === false && $this->_checkRequestLimit($client->getClientId()) === false) {
                                                 $client->onDisconnect();
                                                 unset($this->clients[(int) $socket]);
-                                                $this->allsockets = array_filter($this->allsockets, fn($s) => $s !== $socket);
+                                                $this->allsockets = array_filter($this->allsockets, function ($s) use ($socket) {
+                                                    return $s !== $socket;
+                                                });
                                                 continue;
                                         }
 
