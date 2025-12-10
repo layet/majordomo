@@ -9,6 +9,7 @@ $this->device_types = array(
             'humidity' => array('DESCRIPTION' => 'Humidity'),
             'SomebodyHere' => array('DESCRIPTION' => 'Somebody in the room'),
             'IdleDelay' => array('DESCRIPTION' => LANG_DEVICES_MOTION_TIMEOUT, '_CONFIG_TYPE' => 'text', '_CONFIG_HELP' => 'SdRoomIdleDelay'),
+            'turnedOffAutomatically' => array('DESCRIPTION' => 'List of devices turned off automatically'),
             'turnOffLightsOnIdle' => array('DESCRIPTION' => LANG_DEVICES_TURNOFF_LIGHTS_ON_IDLE, '_CONFIG_TYPE' => 'yesno', '_CONFIG_HELP' => 'SdRoomIdleTurnoffLights'),
         ),
         'METHODS' => array(
@@ -82,6 +83,7 @@ $this->device_types = array(
         'CLASS' => 'SGroups',
         'PROPERTIES' => array(
             'groupName' => array('DESCRIPTION' => 'Group system name'),
+            'delay' => array('DESCRIPTION' => LANG_DEVICES_GROUP_OPERATION_DELAY),
         ),
         'METHODS' => array(
             'turnOn' => array('DESCRIPTION' => LANG_DEVICES_TURN_ON),

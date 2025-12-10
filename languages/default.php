@@ -1214,6 +1214,7 @@ $dictionary = array(
     'DEVICES_GROUP_STATE' => 'Group state',
     'DEVICES_GROUP_STATE_SAVE' => 'Save',
     'DEVICES_GROUP_STATE_RESTORE' => 'Restore',
+    'DEVICES_GROUP_OPERATION_DELAY' => 'Group operation delay (sec)',
 
     'DEVICES_IS_ON' => 'is ON',
     'DEVICES_IS_CLOSED' => 'is Closed',

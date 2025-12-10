@@ -1212,6 +1212,7 @@ $dictionary = array(
     'DEVICES_GROUP_STATE' => 'Состояние группы',
     'DEVICES_GROUP_STATE_SAVE' => 'Сохранить',
     'DEVICES_GROUP_STATE_RESTORE' => 'Восстановить',
+    'DEVICES_GROUP_OPERATION_DELAY' => 'Задержка исполнения команд (сек)',
 
     'DEVICES_IS_ON' => 'Включено',
     'DEVICES_IS_CLOSED' => 'Закрыто',
