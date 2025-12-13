@@ -150,6 +150,7 @@ $this->device_types = array(
             'threshold' => array('DESCRIPTION' => LANG_DEVICES_THERMOSTAT_THRESHOLD, '_CONFIG_TYPE' => 'text', 'ONCHANGE' => 'valueUpdated', '_CONFIG_HELP' => 'SdThermostat'),
             'increment' => array('DESCRIPTION' => LANG_DEVICES_THERMOSTAT_INCREMENT, '_CONFIG_TYPE' => 'text', '_CONFIG_HELP' => 'SdThermostat'),
             'ncno' => array('DESCRIPTION' => LANG_DEVICES_NCNO, '_CONFIG_TYPE' => 'select', '_CONFIG_OPTIONS' => 'nc=Normal Close (Heating),no=Normal Open (Cooling)', '_CONFIG_HELP' => 'SdThermostat'),
+            'relay_readonly' => array('DESCRIPTION' => LANG_DEVICES_THERMOSTAT_RELAY_READONLY, '_CONFIG_TYPE' => 'yesno'),
             'openableSensors' => array('DESCRIPTION' => LANG_DEVICES_THERMOSTAT_OPENABLE, '_CONFIG_TYPE' => 'devices:SOpenable, SOpenClose', '_CONFIG_HELP' => 'SdOpenableSensors'),
             'windowIsOpen' => array('KEEP_HISTORY' => 30),
             'disabled' => array('DESCRIPTION' => 'Disabled'),
