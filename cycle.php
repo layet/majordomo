@@ -12,7 +12,6 @@ chdir(dirname(__FILE__));
 include_once("./config.php");
 include_once("./lib/loader.php");
 include_once("./lib/threads.php");
-include_once("./load_settings.php");
 
 resetRebootRequired();
 
@@ -50,6 +49,37 @@ while (!$connected) {
 
 
 echo "CONNECTED TO DB" . PHP_EOL;
+
+//restoring database backup (if exists)
+if (file_exists($db_filename) && filesize($db_filename) > 0) {
+    echo "Running: mysql main db restore from file: " . $db_filename . PHP_EOL;
+    DebMes("Running: mysql main db restore from file: " . $db_filename, 'boot');
+    $mysql_path = (substr(php_uname(), 0, 7) == "Windows") ? SERVER_ROOT . "/server/mysql/bin/mysql" : 'mysql';
+    $mysqlParam = " -h " . DB_HOST;
+    $mysqlParam .= " -u " . DB_USER;
+    if (DB_PASSWORD != '') $mysqlParam .= " -p'" . DB_PASSWORD . "'";
+    $mysqlParam .= " " . DB_NAME . " <" . $db_filename;
+    exec($mysql_path . $mysqlParam);
+
+    if (file_exists($db_history_filename) && filesize($db_history_filename) > 0) {
+        echo "Running: mysql history db restore from file: " . $db_history_filename . PHP_EOL;
+        DebMes("Running: mysql history db restore from file: " . $db_history_filename, 'boot');
+        $mysql_path = (substr(php_uname(), 0, 7) == "Windows") ? SERVER_ROOT . "/server/mysql/bin/mysql" : 'mysql';
+        $mysqlParam = " -h " . DB_HOST;
+        $mysqlParam .= " -u " . DB_USER;
+        if (DB_PASSWORD != '') $mysqlParam .= " -p'" . DB_PASSWORD . "'";
+        $mysqlParam .= " " . DB_NAME . " <" . $db_history_filename;
+        exec($mysql_path . $mysqlParam);
+    } else {
+        echo "History backup file not found or invalid: " . $db_history_filename . PHP_EOL;
+        DebMes("History backup file not found or invalid: " . $db_history_filename, 'boot');
+    }
+} else {
+    echo "Backup file not found or invalid: " . $db_filename . PHP_EOL;
+    DebMes("Backup file not found or invalid: " . $db_filename, 'boot');
+}
+
+include_once("./load_settings.php");
 
 //если есть "поломанные" таблицы, попытаться их "вылечить"
 echo "CHECK/REPAIR TABLES\n";
@@ -188,38 +218,6 @@ foreach ($dirs_to_check as $d) {
     }
 }
 
-
-//restoring database backup (if was saving periodically)
-if (file_exists($db_filename) && filesize($db_filename) > 0) {
-    echo "Running: mysql main db restore from file: " . $db_filename . PHP_EOL;
-    DebMes("Running: mysql main db restore from file: " . $db_filename, 'boot');
-    $mysql_path = (substr(php_uname(), 0, 7) == "Windows") ? SERVER_ROOT . "/server/mysql/bin/mysql" : 'mysql';
-    $mysqlParam = " -h " . DB_HOST;
-    $mysqlParam .= " -u " . DB_USER;
-    if (DB_PASSWORD != '') $mysqlParam .= " -p'" . DB_PASSWORD . "'";
-    $mysqlParam .= " " . DB_NAME . " <" . $db_filename;
-    exec($mysql_path . $mysqlParam);
-
-    if (file_exists($db_history_filename) && filesize($db_history_filename) > 0) {
-        echo "Running: mysql history db restore from file: " . $db_history_filename . PHP_EOL;
-        DebMes("Running: mysql history db restore from file: " . $db_history_filename, 'boot');
-        $mysql_path = (substr(php_uname(), 0, 7) == "Windows") ? SERVER_ROOT . "/server/mysql/bin/mysql" : 'mysql';
-        $mysqlParam = " -h " . DB_HOST;
-        $mysqlParam .= " -u " . DB_USER;
-        if (DB_PASSWORD != '') $mysqlParam .= " -p'" . DB_PASSWORD . "'";
-        $mysqlParam .= " " . DB_NAME . " <" . $db_history_filename;
-        exec($mysql_path . $mysqlParam);
-    } else {
-        echo "History backup file not found or invalid: " . $db_history_filename . PHP_EOL;
-        DebMes("History backup file not found or invalid: " . $db_history_filename, 'boot');
-    }
-} else {
-    echo "Backup file not found or invalid: " . $db_filename . PHP_EOL;
-    DebMes("Backup file not found or invalid: " . $db_filename, 'boot');
-}
-
-
-include_once("./load_settings.php"); //
 
 echo "Checking modules.\n";
 
