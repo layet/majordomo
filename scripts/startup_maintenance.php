@@ -47,7 +47,7 @@ if (!defined('LOG_FILES_EXPIRE')) {
     define('LOG_FILES_EXPIRE', 5);
 }
 if (!defined('BACKUP_FILES_EXPIRE')) {
-    define('BACKUP_FILES_EXPIRE', 10);
+    define('BACKUP_FILES_EXPIRE', 30);
 }
 if (!defined('CACHED_FILES_EXPIRE')) {
     define('CACHED_FILES_EXPIRE', 30);
